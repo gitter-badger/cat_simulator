@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+$:.unshift File.join(File.dirname(File.dirname(__FILE__)), 'lib')
+
+require 'cat_simulator'
+
+game = CatSimulator::Game.new
+
+game.show
