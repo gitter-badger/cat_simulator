@@ -1,7 +1,8 @@
 module CatSimulator
   class Cat < Chingu::GameObject
-    def initialize(options = {})
-      super(options)
+    traits :velocity, :collision_detection, :bounding_box
+
+    def setup
       @animations = {
         idle: Chingu::Animation.new(file: "cat_idle.png", height: 64, width: 64),
         walk: Chingu::Animation.new(file: "cat_walk.png", height: 64, width: 64)
@@ -15,6 +16,8 @@ module CatSimulator
         released_left: :stop_moving_left,
         released_right: :stop_moving_right
       }
+
+      self.acceleration_y = 0.1
     end
 
     def move_left
@@ -37,6 +40,11 @@ module CatSimulator
 
     def update
       @image = animation.next
+    end
+
+    def encounter_platform(platform)
+      @y = previous_y
+      stop
     end
 
     def animation
