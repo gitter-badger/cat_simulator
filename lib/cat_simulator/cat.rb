@@ -1,12 +1,19 @@
 module CatSimulator
   class Cat < Chingu::GameObject
-    traits :velocity, :collision_detection, :bounding_box
+    traits :velocity, :collision_detection, :bounding_box, :timer
 
     def setup
       @animations = {
         idle: Chingu::Animation.new(file: "cat_idle.png", height: 32, width: 32),
-        walk: Chingu::Animation.new(file: "cat_walk.png", height: 32, width: 32)
+        walk: Chingu::Animation.new(file: "cat_walk.png", height: 32, width: 32),
+        jump: Chingu::Animation.new(file: "cat_jump.png", height: 32, width: 32)
       }
+
+      @animations[:jump].frame_names = {
+        start: 0..1, fly: 2..3, land: 4..7
+      }
+
+      @animations[:jump][:fly].loop = true
 
       @state = :idle
 
@@ -42,9 +49,12 @@ module CatSimulator
     end
 
     def jump
-      if @state != :jump
+      unless [:jump, :fly].include?(@state)
+        stop_timer(:land)
+        stop_timer(:fly)
         @state = :jump
         self.velocity_y = -2.5
+        after(200, name: :fly) { @state = :fly }
       end
     end
 
@@ -53,7 +63,10 @@ module CatSimulator
     end
 
     def encounter_platform(platform)
-      @state = :idle
+      if velocity_y > 0.1
+        @state = :land
+        after(400, name: :land) { @state = :idle }
+      end
       @y = previous_y
       stop
     end
@@ -65,7 +78,11 @@ module CatSimulator
       when :walk_left, :walk_right
         @animations[:walk]
       when :jump
-        @animations[:idle]
+        @animations[:jump][:start]
+      when :fly
+        @animations[:jump][:fly]
+      when :land
+        @animations[:jump][:land]
       end
     end
   end
