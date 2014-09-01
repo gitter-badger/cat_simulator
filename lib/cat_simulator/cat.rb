@@ -14,7 +14,8 @@ module CatSimulator
         holding_left: :move_left,
         holding_right: :move_right,
         released_left: :stop_moving_left,
-        released_right: :stop_moving_right
+        released_right: :stop_moving_right,
+        space: :jump
       }
 
       self.acceleration_y = 0.1
@@ -40,6 +41,13 @@ module CatSimulator
       @state = :idle if @state == :walk_right
     end
 
+    def jump
+      if @state != :jump
+        @state = :jump
+        self.velocity_y = -2.5
+      end
+    end
+
     def update
       @image = animation.next
     end
@@ -55,6 +63,8 @@ module CatSimulator
         @animations[:idle]
       when :walk_left, :walk_right
         @animations[:walk]
+      when :jump
+        @animations[:idle]
       end
     end
   end
