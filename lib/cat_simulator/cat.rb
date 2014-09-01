@@ -23,11 +23,13 @@ module CatSimulator
     def move_left
       @state = :walk_left
       @x -= 1
+      @factor_x = -1
     end
 
     def move_right
       @state = :walk_right
       @x += 1
+      @factor_x = 1
     end
 
     def stop_moving_left
