@@ -10,8 +10,6 @@ module CatSimulator
       @state = :idle
 
       self.input = {
-        left: :start_moving_left,
-        right: :start_moving_right,
         holding_left: :move_left,
         holding_right: :move_right,
         released_left: :stop_moving_left,
@@ -19,19 +17,13 @@ module CatSimulator
       }
     end
 
-    def start_moving_left
-      @state = :walk_left
-    end
-
-    def start_moving_right
-      @state = :walk_right
-    end
-
     def move_left
+      @state = :walk_left
       @x -= 1
     end
 
     def move_right
+      @state = :walk_right
       @x += 1
     end
 
