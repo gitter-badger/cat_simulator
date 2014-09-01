@@ -4,8 +4,8 @@ module CatSimulator
 
     def setup
       @animations = {
-        idle: Chingu::Animation.new(file: "cat_idle.png", height: 30, width: 30),
-        walk: Chingu::Animation.new(file: "cat_walk.png", height: 30, width: 30)
+        idle: Chingu::Animation.new(file: "cat_idle.png", height: 32, width: 32),
+        walk: Chingu::Animation.new(file: "cat_walk.png", height: 32, width: 32)
       }
 
       @state = :idle
