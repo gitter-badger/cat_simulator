@@ -22,13 +22,13 @@ module CatSimulator
     end
 
     def move_left
-      @state = :walk_left
+      @state = :walk_left unless @state == :jump
       @x -= 1
       @factor_x = -1
     end
 
     def move_right
-      @state = :walk_right
+      @state = :walk_right unless @state == :jump
       @x += 1
       @factor_x = 1
     end
@@ -53,6 +53,7 @@ module CatSimulator
     end
 
     def encounter_platform(platform)
+      @state = :idle
       @y = previous_y
       stop
     end
