@@ -29,13 +29,13 @@ module CatSimulator
     end
 
     def move_left
-      @state = :walk_left unless @state == :jump
+      @state = :walk_left unless jumping?
       @x -= 1
       @factor_x = -1
     end
 
     def move_right
-      @state = :walk_right unless @state == :jump
+      @state = :walk_right unless jumping?
       @x += 1
       @factor_x = 1
     end
@@ -49,7 +49,7 @@ module CatSimulator
     end
 
     def jump
-      unless [:jump, :fly].include?(@state)
+      unless jumping?
         stop_timer(:land)
         stop_timer(:fly)
         @state = :jump
@@ -84,6 +84,10 @@ module CatSimulator
       when :land
         @animations[:jump][:land]
       end
+    end
+
+    def jumping?
+      [:jump, :fly].include?(@state)
     end
   end
 end
