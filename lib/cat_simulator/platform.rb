@@ -4,8 +4,6 @@ module CatSimulator
 
     def setup
       @image = Image['platform/grass_middle.png']
-      @x = 100
-      @y = $window.height - (@image.height / 2)
     end
   end
 end

@@ -1,0 +1,13 @@
+---
+- CatSimulator::Platform:
+    :x: 100
+    :y: 500
+- CatSimulator::Platform:
+    :x: 170
+    :y: 500
+- CatSimulator::Platform:
+    :x: 240
+    :y: 500
+- CatSimulator::Platform:
+    :x: 310
+    :y: 500
